@@ -1,0 +1,78 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
+*/
+/* 
+    Created on : 28-May-2025, 5:44:44 pm
+    Author     : ACER
+*/
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    top: 0;
+    height: 60px;
+}
+
+.header .ui-panel {
+    margin: 0;
+    padding: 10px;
+    border: none;
+}
+
+.content {
+    margin-top: 60px;
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.ui-panel {
+    max-width: 600px;
+    width: 100%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ui-panelgrid .ui-panelgrid-cell {
+    padding: 10px;
+}
+
+.ui-panelgrid .ui-panelgrid-cell label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.ui-button {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.ui-button:hover {
+    background-color: #0056b3;
+}
+
+.ui-messages {
+    margin-top: 10px;
+}

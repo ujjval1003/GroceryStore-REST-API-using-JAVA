@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="/template.xhtml">
+    <ui:define name="title">User Profile</ui:define>
+    <ui:define name="content">
+        <h:form>
+            <p:panel header="User Profile">
+                <p:messages id="true"/>
+                <p:panelGrid columns="2" styleClass="p-field">
+                    <p:outputLabel for="name" value="Name:"/>
+                    <p:inputText id="name" value="#{userController.name}" required="true"/>
+                    <p:outputLabel for="email" value="Email:"/>
+                    <p:inputText id="email" value="#{userController.email}" disabled="true"/>
+                    <p:outputLabel for="phone" value="Phone:"/>
+                    <p:inputText id="phone" value="#{userController.phone}"/>
+                    <p:outputLabel for="address" value="Address:"/>
+                    <p:inputTextarea id="address" value="#{userController.address}"/>
+                    <p:outputLabel for="profilePicture" value="Profile Picture URL:"/>
+                    <p:inputText id="profilePicture" value="#{userController.profilePicture}"/>
+                    <p:outputLabel for="role" value="Role:"/>
+                    <p:outputLabel id="role" value="#{userController.role}"/>
+                </p:panelGrid>
+                <p:commandButton value="Update Profile" action="#{userController.updateProfile}" ajax="true" update="@form"/>
+            </p:panel>
+        </h:form>
+        <h:form>
+            <p:panel header="Change Password">
+                <p:messages id="true"/>
+                <p:panelGrid columns="2" styleClass="p-field">
+                    <p:outputLabel for="oldPassword" value="Current Password:"/>
+                    <p:password id="oldPassword" value="#{userController.oldPassword}" required="true"/>
+                    <p:outputLabel for="newPassword" value="New Password:"/>
+                    <p:password id="newPassword" value="#{userController.newPassword}" required="true"/>
+                </p:panelGrid>
+                <p:commandButton value="Change Password" action="#{userController.changePassword}" ajax="true" update="@form"/>
+            </p:panel>
+        </h:form>
+        <h:form>
+            <p:panel header="Delete Profile">
+                <p:commandButton value="Delete Profile" action="#{userController.deleteProfile}" ajax="true" update="@form">
+                    <p:confirm header="Confirmation" message="Are you sure you want to delete your profile?" icon="pi pi-exclamation-triangle"/>
+                </p:commandButton>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade"/>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>
