@@ -96,22 +96,14 @@ Below are screenshots of key pages in the application:
 ### Register Page
 ![Register Page](screenshots/register.png)
 
-### Home Page
-![Home Page](screenshots/home.png)
+### Manage Product
+![Manage Products Page](screenshots/manageproduct.png)
 
 ### Shop Page
 ![Shop Page](screenshots/shop.png)
 
 ### Cart Page
-![Cart Page](screenshots/cart.png)
-
-### Checkout Page
-![Checkout Page](screenshots/checkout.png)
-
-### Orders Page
-![Orders Page](screenshots/orders.png)
-
-*Note*: Replace the `screenshots/` paths with actual screenshot files after capturing them. Create a `screenshots` folder in the project root and add the images there.
+![About Us Page](screenshots/aboutus.png)
 
 ## Troubleshooting
 - **Database Connection Errors**: Ensure MySQL is running in XAMPP and the `project` database is imported correctly.
@@ -145,4 +137,4 @@ To contribute to this project:
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
-For questions or support, contact the project maintainer at [your-email@example.com].
+For questions or support, contact the project maintainer @ [ujjvalpatel210@gmail.com].
