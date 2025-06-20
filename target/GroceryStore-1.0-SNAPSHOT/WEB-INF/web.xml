@@ -48,7 +48,4 @@
     <welcome-file-list>
         <welcome-file>shop.xhtml</welcome-file>
     </welcome-file-list>
-
-=======
->>>>>>> bd83b24389d13fad05d6de3807d01833b3567b5d
 </web-app>

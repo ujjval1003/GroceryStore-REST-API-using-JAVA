@@ -46,7 +46,6 @@
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
         </dependency>
-<<<<<<< HEAD
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
@@ -82,8 +81,6 @@
             <artifactId>jersey-media-json-binding</artifactId>
             <version>3.1.0</version>
         </dependency>
-=======
->>>>>>> bd83b24389d13fad05d6de3807d01833b3567b5d
     </dependencies>
     
     <build>
