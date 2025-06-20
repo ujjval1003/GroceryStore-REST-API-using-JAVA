@@ -19,6 +19,7 @@
         <servlet-name>Jersey REST Service</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
+<<<<<<< HEAD
 
     <!-- JSF Configuration -->
     <context-param>
@@ -48,4 +49,6 @@
         <welcome-file>shop.xhtml</welcome-file>
     </welcome-file-list>
 
+=======
+>>>>>>> bd83b24389d13fad05d6de3807d01833b3567b5d
 </web-app>
