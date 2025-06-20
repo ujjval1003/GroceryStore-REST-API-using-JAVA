@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 23, 2025 at 08:42 AM
+-- Generation Time: Jun 20, 2025 at 09:36 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,7 +38,7 @@ CREATE TABLE `carts` (
 --
 
 INSERT INTO `carts` (`cart_id`, `user_id`, `created_at`) VALUES
-(1, 1, '2025-05-19 03:11:16');
+(3, 21, '2025-06-17 04:10:49');
 
 -- --------------------------------------------------------
 
@@ -70,8 +70,13 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`category_id`, `name`, `description`) VALUES
-(1, 'Fruits', 'Fresh fruits'),
-(2, 'Vegetables', 'Green and leafy vegetables');
+(1, 'Dairy, Bread & Eggs', 'All dairy product, Breads and eggs'),
+(2, 'Fruits & Vegetables', 'Green and leafy vegetables and fruits'),
+(3, 'Chicken, Meat & Fish', 'All non-vegetarian items'),
+(4, 'Cold Drinks & Juices', 'All type of cold drinks and juices'),
+(5, 'Snacks & Munchies', 'Fresh snacks'),
+(6, 'Breakfast & Instant Food', 'Healthy breackfast'),
+(7, 'Bakery & Biscuits', 'All type of Bakery and Biscuits');
 
 -- --------------------------------------------------------
 
@@ -88,16 +93,6 @@ CREATE TABLE `discounts` (
   `start_date` timestamp NULL DEFAULT NULL,
   `end_date` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `discounts`
---
-
-INSERT INTO `discounts` (`discount_id`, `seller_id`, `category_id`, `product_id`, `discount_percent`, `start_date`, `end_date`) VALUES
-(1, 2, NULL, 1, 10.00, '2025-04-30 18:30:00', '2025-05-10 18:29:59'),
-(3, 2, NULL, NULL, 10.00, '2025-05-21 00:00:00', '2025-05-31 23:59:59'),
-(4, 2, NULL, NULL, 10.00, '2025-05-21 00:00:00', '2025-05-31 23:59:59'),
-(5, 2, NULL, 1, 10.00, '2025-05-21 00:00:00', '2025-06-21 23:59:59');
 
 -- --------------------------------------------------------
 
@@ -119,10 +114,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `user_id`, `total_price`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 7.98, '', '2025-05-19 03:11:17', '2025-05-19 03:11:17'),
-(2, 1, 7.47, 'SHIPPED', '2025-05-19 07:16:42', '2025-05-21 17:03:27'),
-(3, 1, 6.98, 'PENDING', '2025-05-21 14:08:00', '2025-05-21 14:08:00'),
-(6, 1, 16.45, 'PENDING', '2025-05-21 14:43:49', '2025-05-21 14:43:49');
+(7, 21, 181.65, 'SHIPPED', '2025-06-18 05:02:57', '2025-06-19 04:39:03'),
+(8, 21, 58.00, 'PENDING', '2025-06-19 06:25:30', '2025-06-19 06:25:30');
 
 -- --------------------------------------------------------
 
@@ -144,12 +137,10 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`order_item_id`, `order_id`, `product_id`, `quantity`, `price_at_purchase`, `discount_applied`) VALUES
-(1, 1, 1, 2, 3.99, 0.00),
-(2, 2, 2, 3, 2.49, 0.00),
-(3, 3, 1, 2, 3.49, 0.00),
-(4, 6, 1, 2, 3.49, 0.00),
-(5, 6, 1, 2, 3.49, 0.00),
-(6, 6, 2, 1, 2.49, 0.00);
+(7, 7, 8, 3, 60.55, 0.00),
+(8, 8, 11, 1, 35.00, 0.00),
+(9, 8, 13, 1, 5.00, 0.00),
+(10, 8, 10, 1, 18.00, 0.00);
 
 -- --------------------------------------------------------
 
@@ -174,9 +165,11 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`product_id`, `seller_id`, `name`, `description`, `price`, `stock_quantity`, `category_id`, `created_at`, `updated_at`) VALUES
-(1, 2, 'Green Apple', 'Fresh green apple', 2.49, 150, 1, '2025-05-19 03:11:16', '2025-05-21 15:36:38'),
-(2, 2, 'Spinach', 'Organic spinach leaves', 2.49, 146, 2, '2025-05-19 03:11:16', '2025-05-21 14:43:49'),
-(4, 14, 'Banana', 'Fresh Bananas', 1.99, 100, 1, '2025-05-21 08:46:12', '2025-05-21 08:46:12');
+(8, 17, 'Amul Butter', 'Amul butter made from pure cow milk', 60.55, 20, 1, '2025-06-14 06:55:36', '2025-06-19 03:11:05'),
+(10, 17, 'Haldiram\'s Sev Bhujia', 'Haldiram\'s Sev Bhujia limited edition ', 18.00, 19, 5, '2025-06-15 07:31:19', '2025-06-19 06:25:30'),
+(11, 17, 'Britannia Cheese Slices', 'Fresh Cheese', 35.00, 9, 1, '2025-06-15 07:32:30', '2025-06-19 06:25:30'),
+(12, 17, 'Salted Instant Popcorn', 'Popcorns in 5 mins', 22.50, 40, 6, '2025-06-15 07:34:00', '2025-06-16 07:41:39'),
+(13, 17, 'Slurrp Millet Chocolate', 'Fresh Chocolate', 5.00, 49, 5, '2025-06-15 08:07:30', '2025-06-19 06:25:30');
 
 -- --------------------------------------------------------
 
@@ -196,8 +189,11 @@ CREATE TABLE `product_images` (
 --
 
 INSERT INTO `product_images` (`image_id`, `product_id`, `image_path`, `created_at`) VALUES
-(3, 2, '/uploads/products/spinach1.jpg', '2025-05-19 03:11:16'),
-(5, 4, 'banana.jpg', '2025-05-21 15:38:47');
+(6, 8, '/uploads/images/d05bc5f0-eaa0-4fd1-aaf7-4b2d2fe1bbb9_product-img-10.jpg', '2025-06-14 06:55:36'),
+(8, 10, '/uploads/images/5a13ba5a-93d1-4cc7-9368-25c56fae0bbb_product-img-1.jpg', '2025-06-15 07:31:19'),
+(9, 11, '/uploads/images/b76eadc0-de3a-4bdb-b2a3-73f4e4c34cc1_product-img-7.jpg', '2025-06-15 07:32:30'),
+(10, 12, '/uploads/images/e935a72a-9bf6-47f2-9083-31dd1a6fb889_product-img-5.jpg', '2025-06-15 07:34:00'),
+(11, 13, '/uploads/images/a350c1f2-9894-4831-912e-97382236b894_product-img-9.jpg', '2025-06-15 08:07:30');
 
 -- --------------------------------------------------------
 
@@ -214,15 +210,6 @@ CREATE TABLE `reviews` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `reviews`
---
-
-INSERT INTO `reviews` (`review_id`, `user_id`, `product_id`, `rating`, `comment`, `created_at`) VALUES
-(1, 1, 1, 5, 'Very fresh and tasty apples!', '2025-05-19 03:11:17'),
-(2, 1, 1, 4, 'Great product!', '2025-05-21 14:44:56'),
-(3, 1, 1, 4, 'Great product!', '2025-05-21 15:15:36');
-
 -- --------------------------------------------------------
 
 --
@@ -238,12 +225,37 @@ CREATE TABLE `seller_analytics` (
   `last_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `seller_analytics`
+-- Table structure for table `token_blacklist`
 --
 
-INSERT INTO `seller_analytics` (`analytic_id`, `seller_id`, `total_sales`, `total_orders`, `top_product_id`, `last_updated`) VALUES
-(1, 2, 7.98, 1, 1, '2025-05-19 03:11:17');
+CREATE TABLE `token_blacklist` (
+  `id` bigint(20) NOT NULL,
+  `token` varchar(500) NOT NULL,
+  `blacklisted_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `token_blacklist`
+--
+
+INSERT INTO `token_blacklist` (`id`, `token`, `blacklisted_at`) VALUES
+(1, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxOCIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzQ4MDcyNzE4LCJleHAiOjE3NDgxNTkxMTh9.dFWxwnPvm6qlXh2o4FbTaGIzQOzS0-oYlejLflx5gAg', '2025-05-24 07:46:58'),
+(2, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNyIsInJvbGUiOiJTRUxMRVIiLCJpYXQiOjE3NDgyNDI0ODgsImV4cCI6MTc0ODMyODg4OH0.PTzCwwZwodBDAbRnuj8n_2UyJoWjJl5A7-mdIhbeQtc', '2025-05-26 06:57:12'),
+(3, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxOSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzQ4MzMxNTU2LCJleHAiOjE3NDg0MTc5NTZ9.ICkyyc_6iRaSjB30n4i5O-FAKs5zUrwDXKpOFR3b0xw', '2025-05-27 07:40:39'),
+(4, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMCIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzQ4NDM1MjE1LCJleHAiOjE3NDg1MjE2MTV9.Jd9evbZKF_SRsW6Sb4zX1dli3IDlErBS4m06rXBoq8Q', '2025-05-28 12:28:35'),
+(5, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMCIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzQ4NzU2NjYwLCJleHAiOjE3NDg4NDMwNjB9.S0LO0rrdAmwTs-cC8z5REFU0KwfY6wM2RGg6yWDCWJA', '2025-06-01 05:46:02'),
+(6, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNyIsInJvbGUiOiJTRUxMRVIiLCJpYXQiOjE3NDk3OTIzNzgsImV4cCI6MTc0OTg3ODc3OH0.6UEjz8ZcP0TLKjMCsmge1dTD5NAte3PZaFi0HKqaJNU', '2025-06-13 05:26:30'),
+(7, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNyIsInJvbGUiOiJTRUxMRVIiLCJpYXQiOjE3NDk3OTMxNDEsImV4cCI6MTc0OTg3OTU0MX0.fVHjZFhjstaeRxIbu8XrAjYXJ9pJ4hz3bpNW8nIQ4b0', '2025-06-13 05:39:32'),
+(8, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNyIsInJvbGUiOiJTRUxMRVIiLCJpYXQiOjE3NDk3OTUwMjQsImV4cCI6MTc0OTg4MTQyNH0.zF6N2eVHyqmu32eTWKutAkNGFnBGL85bNjmYNw-NmZo', '2025-06-13 06:10:57'),
+(9, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNyIsInJvbGUiOiJTRUxMRVIiLCJpYXQiOjE3NDk3OTgwOTQsImV4cCI6MTc0OTg4NDQ5NH0.eDASDH7lAfkS70igF36LHZB1MY_5YaL9fE2alr5uoaM', '2025-06-13 07:03:20'),
+(10, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNyIsInJvbGUiOiJTRUxMRVIiLCJpYXQiOjE3NDk5NzI0MTAsImV4cCI6MTc1MDA1ODgxMH0.r0x7DVYLOQS2MEKLsb7KDwR0aaAakAgq7c_0IsSTiDQ', '2025-06-15 07:34:08'),
+(11, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUwMTQwNjc5LCJleHAiOjE3NTAyMjcwNzl9.nS2fZHhdf86iAlc3oypk6SfVFQ3EUJd06s077zUWlY0', '2025-06-17 06:21:24'),
+(12, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUwMzE0MjE4LCJleHAiOjE3NTA0MDA2MTh9.U6jbmaJMzjR9T9fpTIuvZWpDLHY8krq2sVVnUvUyMO4', '2025-06-19 06:25:44'),
+(13, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNyIsInJvbGUiOiJTRUxMRVIiLCJpYXQiOjE3NTAzMTQzNTIsImV4cCI6MTc1MDQwMDc1Mn0.Na2wjeE1PGO7eAt8QQuflLy7JTgfFCLQdYvBI5u7w0M', '2025-06-19 06:28:24'),
+(14, 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzUwMzE2MzY4LCJleHAiOjE3NTA0MDI3Njh9.E5DVyv_zDV_GZjPzRucKcr1qBWZcVH1F5x3bSKB2N3k', '2025-06-19 07:00:24');
 
 -- --------------------------------------------------------
 
@@ -269,9 +281,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `phone`, `address`, `role`, `profile_picture`, `created_at`, `updated_at`) VALUES
-(1, 'Jane Doe', 'alice@example.com', 'password123', '1112223333', '789 Market St', 'USER', 'profile.jpg', '2025-05-19 03:11:16', '2025-05-19 06:58:12'),
-(2, 'Jane Doe', 'bob@example.com', 'password456', '1112223333', '789 Market St', 'SELLER', 'profile.jpg', '2025-05-19 03:11:16', '2025-05-19 06:09:04'),
-(14, 'Jane Seller', 'jane@example.com', 'pass', '0987654321', '456 Market St', 'SELLER', NULL, '2025-05-21 07:44:48', '2025-05-21 07:44:48');
+(1, 'Jane Doe', 'alice@example.com', '$2a$12$1duSdizI7/l/5XuatWL74uFyfeRMdj7tRn9CkBXEI4Zk/4UPz9Ove', '1112223333', '789 Market St', 'USER', 'profile.jpg', '2025-05-19 03:11:16', '2025-06-15 05:34:46'),
+(2, 'Jane Doe', 'bob@example.com', '$2a$12$R/kef7/2Qkj.QenEP.itneZgRvYbWXTefBRf5loV9HiXMBT313Iri', '1112223333', '789 Market St', 'SELLER', 'profile.jpg', '2025-05-19 03:11:16', '2025-06-15 05:35:11'),
+(17, 'Seller', 'testseller@example.com', '$2a$10$rwgMz81NRTvF7CHKmArf9OwrUqLrLM.Zv/zAWTlI4XGBF5MZS/Bly', '9874563310', '123 Update Street', 'SELLER', NULL, '2025-05-24 06:56:02', '2025-06-14 04:24:31'),
+(19, 'Updated User', 'testuser@example.com', '$2a$10$n7J65iX7QSuQwuSn8MJCI.ZwSlaALOtomEPGhjW5qtOx69gHBotKW', '0987654321', '123 Updated Lane', 'USER', 'http://example.com/profile.jpg', '2025-05-27 03:47:40', '2025-05-27 03:49:09'),
+(21, 'Ujjval', 'ujjvalpatel210@gmail.com', '$2a$10$PB98BrogMFmol.ayDp0UPenGSzL1zJrsKE3f5ACD.DxWog5efr9ri', '09106320495', 'fgfufhefhweiojrehiejfiowejfwuhfioejfi', 'USER', NULL, '2025-06-15 05:33:25', '2025-06-15 05:33:25');
 
 --
 -- Indexes for dumped tables
@@ -289,7 +303,7 @@ ALTER TABLE `carts`
 --
 ALTER TABLE `cart_items`
   ADD PRIMARY KEY (`cart_item_id`),
-  ADD KEY `cart_id` (`cart_id`),
+  ADD UNIQUE KEY `unique_cart_product` (`cart_id`,`product_id`),
   ADD KEY `product_id` (`product_id`);
 
 --
@@ -356,6 +370,13 @@ ALTER TABLE `seller_analytics`
   ADD KEY `top_product_id` (`top_product_id`);
 
 --
+-- Indexes for table `token_blacklist`
+--
+ALTER TABLE `token_blacklist`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `token` (`token`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -370,19 +391,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `cart_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `cart_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
 --
 ALTER TABLE `cart_items`
-  MODIFY `cart_item_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `cart_item_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `category_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `category_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `discounts`
@@ -394,25 +415,25 @@ ALTER TABLE `discounts`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `order_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_item_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `order_item_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `product_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `product_images`
 --
 ALTER TABLE `product_images`
-  MODIFY `image_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `image_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `reviews`
@@ -427,10 +448,16 @@ ALTER TABLE `seller_analytics`
   MODIFY `analytic_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `token_blacklist`
+--
+ALTER TABLE `token_blacklist`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Constraints for dumped tables
