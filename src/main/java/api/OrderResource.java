@@ -7,17 +7,18 @@ package api;
 import EJB.OrderBean;
 import Entity.OrderItems;
 import Entity.Orders;
+import Entity.ProductImages;
 import dto.CategoryDTO;
 import dto.OrderDTO;
 import dto.OrderItemDTO;
 import dto.ProductDTO;
+import dto.ProductImageDTO;
 import dto.UserDTO;
 import jakarta.ejb.EJB;
 import jakarta.ejb.EJBException;
 import jakarta.persistence.PersistenceException;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.container.ContainerRequestContext;
 import jakarta.ws.rs.core.*;
@@ -38,26 +39,31 @@ public class OrderResource {
     private OrderBean orderBean;
 
     public static class UpdateOrderRequest {
-        @NotNull
         public String status;
-        @NotNull
         public Long sellerId;
     }
 
-    public static class CancelOrderRequest {
-        @NotNull
-        public Long userId;
-    }
-
     @GET
+    @Path("/user")
     @Secured(role = "USER")
-    public Response getOrdersByUser(@QueryParam("userId") Long userId, @Context ContainerRequestContext crequest) {
+    public Response getOrdersByUser(@Context ContainerRequestContext crequest) {
         String authUserId = (String) crequest.getProperty("userId");
-        if (!authUserId.equals(String.valueOf(userId))) {
-            return Response.status(Response.Status.FORBIDDEN).entity("Unauthorized user ID").build();
-        }
         try {
-            List<Orders> orders = orderBean.getOrdersByUser(userId);
+            List<Orders> orders = orderBean.getOrdersByUser(Long.valueOf(authUserId));
+            List<OrderDTO> orderDTOs = orders.stream()
+                    .map(this::toOrderDTO)
+                    .collect(Collectors.toList());
+            return Response.ok(orderDTOs).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
+    
+    @GET
+    @Secured(role = "Seller")
+    public Response getAllOrders(@Context ContainerRequestContext crequest) {
+        try {
+            List<Orders> orders = orderBean.getAllOrders();
             List<OrderDTO> orderDTOs = orders.stream()
                     .map(this::toOrderDTO)
                     .collect(Collectors.toList());
@@ -67,6 +73,18 @@ public class OrderResource {
         }
     }
 
+    @GET
+    @Path("/{orderId}")
+    @Secured(role = "Seller")
+    public Response getOrderById(@PathParam("orderId") Long orderId) {
+        try {
+            Orders order = orderBean.getOrderById(orderId);
+            return Response.ok(toOrderDTO(order)).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
+    
     @PUT
     @Path("/{orderId}")
     @Secured(role = "SELLER")
@@ -110,13 +128,10 @@ public class OrderResource {
     @PUT
     @Path("/{orderId}/cancel")
     @Secured(role = "USER")
-    public Response cancelOrder(@PathParam("orderId") Long orderId, @Valid CancelOrderRequest request, @Context ContainerRequestContext crequest) {
+    public Response cancelOrder(@PathParam("orderId") Long orderId, @Context ContainerRequestContext crequest) {
         String authUserId = (String) crequest.getProperty("userId");
-        if (!authUserId.equals(String.valueOf(request.userId))) {
-            return Response.status(Response.Status.FORBIDDEN).entity("Unauthorized user ID").build();
-        }
         try {
-            Orders order = orderBean.cancelOrder(orderId, request.userId);
+            Orders order = orderBean.cancelOrder(orderId, Long.valueOf(authUserId));
             if (order == null) {
                 return Response.status(Response.Status.NOT_FOUND).entity("Order not found").build();
             }
@@ -161,6 +176,7 @@ public class OrderResource {
         ProductDTO dto = new ProductDTO();
         dto.setProductId(product.getProductId());
         dto.setName(product.getName());
+        dto.setDescription(product.getDescription());
         dto.setPrice(product.getPrice());
         dto.setStockQuantity(product.getStockQuantity());
         dto.setSellerId(new UserDTO(product.getSellerId().getUserId()));
@@ -169,6 +185,19 @@ public class OrderResource {
         }
         dto.setCreatedAt(product.getCreatedAt());
         dto.setUpdatedAt(product.getUpdatedAt());
+        if (product.getProductImagesCollection() != null) {
+            dto.setProductImagesCollection(product.getProductImagesCollection().stream()
+                    .map(this::toProductImageDTO)
+                    .collect(Collectors.toList()));
+        }
         return dto;
+    }
+    
+    private ProductImageDTO toProductImageDTO(ProductImages productImage) {
+        ProductImageDTO imageDTO = new ProductImageDTO();
+        imageDTO.setImageId(productImage.getImageId());
+        imageDTO.setImagePath(productImage.getImagePath());
+        imageDTO.setCreatedAt(productImage.getCreatedAt());
+        return imageDTO;
     }
 }

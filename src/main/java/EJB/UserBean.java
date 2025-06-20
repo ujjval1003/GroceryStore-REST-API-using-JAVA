@@ -69,23 +69,12 @@ public class UserBean {
     }
 
     // Update user profile
-    public Users updateProfile(Long userId, String name, String phone, String address, String profilePicture) {
+    public Users updateProfile(Long userId, String name, String phone, String address, String password) {
         Users user = em.find(Users.class, userId);
         if (user != null) {
             user.setName(name);
             user.setPhone(phone);
             user.setAddress(address);
-            user.setProfilePicture(profilePicture);
-            user.setUpdatedAt(new Date());
-            em.merge(user);
-        }
-        return user;
-    }
-    
-    // Reset Password
-    public Users changePassword(Long userId, String currentPassword, String password) {
-        Users user = em.find(Users.class, userId);
-        if (user != null && BCrypt.checkpw(currentPassword, user.getPassword())) {
             user.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
             user.setUpdatedAt(new Date());
             em.merge(user);

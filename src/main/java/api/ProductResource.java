@@ -4,11 +4,13 @@
  */
 package api;
 
+import EJB.CategoryBean;
 import dto.CategoryDTO;
 import dto.ProductDTO;
 import dto.ProductImageDTO;
 import dto.UserDTO;
 import EJB.ProductBean;
+import Entity.Categories;
 import Entity.ProductImages;
 import Entity.Products;
 import jakarta.ejb.EJB;
@@ -28,6 +30,9 @@ public class ProductResource {
 
     @EJB
     private ProductBean productBean;
+    
+    @EJB
+    private CategoryBean categoryBean;
 
     @GET
     public Response getAllProducts() {
@@ -38,6 +43,16 @@ public class ProductResource {
         return Response.ok(productDTOs).build();
     }
 
+    @GET
+    @Path("/category")
+    public Response getAllCategories() {
+        List<Categories> category = categoryBean.getAllCategories();
+        List<CategoryDTO> categoryDTOs = category.stream()
+                .map(this::toCategoryDTO)
+                .collect(Collectors.toList());
+        return Response.ok(categoryDTOs).build();
+    }
+    
     @GET
     @Path("/{id}")
     public Response getProductById(@PathParam("id") Long productId) {
@@ -101,6 +116,14 @@ public class ProductResource {
         dto.setImageId(image.getImageId());
         dto.setImagePath(image.getImagePath());
         dto.setCreatedAt(image.getCreatedAt());
+        return dto;
+    }
+    
+    private CategoryDTO toCategoryDTO(Categories category) {
+        CategoryDTO dto = new CategoryDTO();
+        dto.setCategoryId(category.getCategoryId());
+        dto.setName(category.getName());
+        dto.setDescription(category.getDescription());
         return dto;
     }
 }

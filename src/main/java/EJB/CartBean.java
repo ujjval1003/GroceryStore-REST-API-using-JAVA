@@ -58,7 +58,7 @@ public class CartBean {
     }
 
     // Get or create cart for user
-    private Carts getUserCart(Long userId) {
+    public Carts getUserCart(Long userId) {
         TypedQuery<Carts> query = em.createQuery(
             "SELECT c FROM Carts c WHERE c.userId.userId = :userId", Carts.class);
         query.setParameter("userId", userId);
@@ -70,14 +70,38 @@ public class CartBean {
             em.persist(cart);
             return cart;
         }
-        return carts.get(0);
+        Carts cart = carts.get(0);
+        // Initialize cart items collection to avoid LazyInitializationException
+        cart.getCartItemsCollection().size();
+        return cart;
     }
 
     // Add product to cart
     public void addToCart(Long userId, Long productId, int quantity) {
         Carts cart = getUserCart(userId);
         Products product = em.find(Products.class, productId);
-        if (product != null && product.getStockQuantity() >= quantity) {
+        if (product == null) {
+            throw new IllegalArgumentException("Product not found");
+        }
+        if (product.getStockQuantity() < quantity) {
+            throw new IllegalArgumentException("Insufficient stock");
+        }
+
+        TypedQuery<CartItems> query = em.createQuery(
+            "SELECT ci FROM CartItems ci WHERE ci.cartId.cartId = :cartId AND ci.productId.productId = :productId",
+            CartItems.class
+        );
+        query.setParameter("cartId", cart.getCartId());
+        query.setParameter("productId", productId);
+
+        List<CartItems> existingItems = query.getResultList();
+        if (!existingItems.isEmpty()) {
+            // Update existing entry
+            CartItems existingItem = existingItems.get(0);
+            existingItem.setQuantity(existingItem.getQuantity() + quantity);
+            em.merge(existingItem);
+        } else {
+            // Create new entry
             CartItems item = new CartItems();
             item.setCartId(cart);
             item.setProductId(product);
@@ -86,6 +110,40 @@ public class CartBean {
         }
     }
 
+    // Increase cart item quantity
+    public void increaseCartItemQuantity(Long userId, Long productId) {
+        Carts cart = getUserCart(userId);
+        TypedQuery<CartItems> query = em.createQuery(
+            "SELECT ci FROM CartItems ci WHERE ci.cartId.cartId = :cartId AND ci.productId.productId = :productId",
+            CartItems.class
+        );
+        query.setParameter("cartId", cart.getCartId());
+        query.setParameter("productId", productId);
+
+        CartItems cartItem = query.getSingleResult();
+        cartItem.setQuantity(cartItem.getQuantity() + 1);
+        em.merge(cartItem);
+    }
+
+    // Decrease cart item quantity
+    public void decreaseCartItemQuantity(Long userId, Long productId) {
+        Carts cart = getUserCart(userId);
+        TypedQuery<CartItems> query = em.createQuery(
+            "SELECT ci FROM CartItems ci WHERE ci.cartId.cartId = :cartId AND ci.productId.productId = :productId",
+            CartItems.class
+        );
+        query.setParameter("cartId", cart.getCartId());
+        query.setParameter("productId", productId);
+        CartItems cartItem = query.getSingleResult();
+        
+        if (cartItem.getQuantity() <= 1) {
+            throw new IllegalArgumentException("Quantity cannot be less than 1");
+        }
+
+        cartItem.setQuantity(cartItem.getQuantity() - 1);
+        em.merge(cartItem);
+    }
+    
     // Direct checkout (single product)
     public Orders directCheckout(Long userId, Long productId, int quantity) {
         // Validate inputs
@@ -217,7 +275,11 @@ public class CartBean {
             em.merge(product);
             em.remove(cartItem);
         }
-
         return order;
+    }
+    
+    public void deleteCartItem(Long CartItemId) {
+        CartItems item = em.find(CartItems.class, CartItemId);
+        em.remove(item);
     }
 }

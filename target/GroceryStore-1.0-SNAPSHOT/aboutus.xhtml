@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>About Us - FreshCart</title>
+        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet"/>
+        <h:outputStylesheet name="css/app.css"/>
+        <style>
+            .bg-position-bottom-center {
+                background-position: bottom center;
+            }
+            .bg-size-cover {
+                background-size: cover;
+            }
+            .bg-repeat-0 {
+                background-repeat: no-repeat;
+            }
+            .zindex-5 {
+                z-index: 5;
+            }
+            .fs-xl {
+                font-size: 1.25rem;
+            }
+            .border-end-lg {
+                border-right: 1px solid #dee2e6;
+            }
+            .gallery-item {
+                position: relative;
+                display: block;
+                overflow: hidden;
+            }
+            .gallery-item img {
+                width: 100%;
+                height: auto;
+                transition: transform 0.3s ease;
+            }
+            .gallery-item:hover img {
+                transform: scale(1.05);
+            }
+            .gallery-item-caption {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.7);
+                color: #fff;
+                padding: 1rem;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            .gallery-item:hover .gallery-item-caption {
+                opacity: 1;
+            }
+            .bg-secondaryy {
+                background-color: #f8f9fa;
+            }
+            .zindex-3 {
+                z-index: 3;
+            }
+            .text-light {
+                color: #fff !important;
+            }
+            .link-primary {
+                color: #0d6efd;
+            }
+            .link-primary:hover {
+                color: #0a58ca;
+            }
+            .stretched-link::after {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 1;
+                content: "";
+            }
+            .btn-login {
+                background-color: #0aad0a !important;
+                border-color: #0aad0a !important;
+                color: #fff !important;
+            }
+            .btn-login:hover {
+                background-color: #198754 !important;
+                border-color: #198754 !important;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <header>
+            <div>
+                <!-- Top Bar -->
+                <div class="border-bottom pb-5">
+                    <div class="bg-light py-1">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-10 col-12 d-flex" style="align-items: center;">
+                                    <span>Super Value Deals - Save more with coupons</span>
+                                </div>
+                                <div class="col-md-2 col-xxl-1 text-end d-none d-lg-block" style="margin-left: 20px;">
+                                    <div class="list-inline">
+                                        <div class="list-inline-item">
+                                            <a href="shopcart.jsf" class="text-muted position-relative">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
+                                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <div class="list-inline-item">
+                                            <a href="login.jsf" class="text-muted">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="12" cy="7" r="4"></circle>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navbar -->
+                <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+                    <div class="container">
+                        <a class="navbar-brand" href="home.jsf">
+                            <h:graphicImage name="images/Grocerylogo.png" style="width: 200px; margin-bottom: 10px; margin-left: -15px;" alt="eCommerce HTML Template"/>
+                        </a>
+                        <input type="text" class="form-control responsivesearch" style="width: 35%;" id="exampleDataList" list="datalistOptions"/>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobile_nav" aria-controls="mobile_nav" aria-expanded="false" aria-label="Toggle navigation">
+                            <div class="containerr" id="hamburger">
+                                <div class="bar1"></div>
+                                <div class="bar2"></div>
+                                <div class="bar3"></div>
+                            </div>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mobile_nav">
+                            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 float-md-right"></ul>
+                            <ul class="navbar-nav navbar-light">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="home.jsf">Home</a>
+                                </li>
+                                <li class="nav-item dmenu dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAbout" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        About
+                                    </a>
+                                    <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdownAbout">
+                                        <a class="dropdown-item" href="aboutus.jsf">About us</a>
+                                        <a class="dropdown-item" href="contact.jsf">Contact</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dmenu dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownShop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Shop
+                                    </a>
+                                    <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdownShop">
+                                        <a class="dropdown-item" href="shop.jsf">Shop</a>
+                                        <a class="dropdown-item" href="shopcart.jsf">Shop Cart</a>
+                                        <a class="dropdown-item" href="shopcheckout.jsf">Shop Checkout</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dmenu dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Account
+                                    </a>
+                                    <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdownAccount">
+                                        <a class="dropdown-item" href="login.jsf">Login</a>
+                                        <a class="dropdown-item" href="register.jsf">Register</a>
+                                        <a class="dropdown-item" href="orders.jsf">Orders</a>
+                                        <a class="dropdown-item" href="accountsetting.jsf">Settings</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Page Content Wrapper -->
+        <div id="page-content">
+            <!-- Scroll to Top Button -->
+            <div class="scroll-to-top">
+                <button id="scrollToTopButton" class="scroll-to-top-button">↑</button>
+            </div>
+            <!-- Hero Section -->
+            <section class="position-relative pt-5">
+                <!-- Background -->
+                <div class="position-absolute top-0 start-0 w-100 bg-position-bottom-center bg-size-cover bg-repeat-0" style="background-image: url('images/hero-bg.svg');">
+                    <div class="d-lg-none" style="height: 960px;"></div>
+                    <div class="d-none d-lg-block" style="height: 768px;"></div>
+                </div>
+                <!-- Content -->
+                <div class="container position-relative zindex-5 pt-5">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h1 class="pb-2 pb-md-3">About Fresh Cart</h1>
+                            <h3 class="pb-2 pb-md-3">The Future of Grocery Delivery:</h3>
+                            <p class="fs-xl pb-4 mb-1 mb-md-2 mb-lg-3" style="max-width: 526px;">
+                                By powering the future of grocery with our retail partners, 
+                                we give everyone access to the food they love and more time 
+                                to enjoy it together.
+                            </p>
+                            <h:graphicImage name="images/clutch-dark.png" styleClass="d-dark-mode-none" width="175" alt="Clutch"/>
+                            <h:graphicImage name="images/clutch-light.png" styleClass="d-none d-dark-mode-block" width="175" alt="Clutch"/>
+                            <div class="row row-cols-3 pt-4 pt-md-5 mt-2 mt-xl-4">
+                                <div class="col">
+                                    <h3 class="h2 mb-2">2,480</h3>
+                                    <p class="mb-0"><strong>Remote</strong> Sales Experts</p>
+                                </div>
+                                <div class="col">
+                                    <h3 class="h2 mb-2">760</h3>
+                                    <p class="mb-0"><strong>New Clients</strong> per Month</p>
+                                </div>
+                                <div class="col">
+                                    <h3 class="h2 mb-2">1,200</h3>
+                                    <p class="mb-0"><strong>Requests</strong> per Week</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 mt-xl-3 pt-5 pt-lg-4">
+                            <div class="row row-cols-2 gx-3 gx-lg-4">
+                                <div class="col pt-lg-5 mt-lg-1">
+                                    <h:graphicImage name="images/01.jpg" styleClass="d-block rounded-3 mb-3 mb-lg-4" alt="member"/>
+                                </div>
+                                <div class="col">
+                                    <h:graphicImage name="images/03.jpg" styleClass="d-block rounded-3 mb-3 mb-lg-4" alt="member"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Benefits Section -->
+            <section class="container mt-8 mb-5 pt-lg-5" id="benefits">
+                <div class="row pt-4">
+                    <div class="col-lg-4 col-md-6 col-sm-12 border-end-lg px-2 mb-4">
+                        <div class="text-center">
+                            <h:graphicImage name="images/idea.gif" width="100" alt="Bulb icon" styleClass="d-block mb-4 mx-auto"/>
+                            <h4 class="mb-2 pb-1">Creative Solutions</h4>
+                            <p class="mx-auto" style="max-width: 336px;">
+                                Sed morbi nulla pulvinar lectus tempor vel euismod accumsan.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 border-end-lg px-2 mb-4">
+                        <div class="text-center">
+                            <h:graphicImage name="images/award.gif" width="100" alt="Award icon" styleClass="d-block mb-4 mx-auto"/>
+                            <h4 class="mb-2 pb-1">Award Winning</h4>
+                            <p class="mx-auto" style="max-width: 336px;">
+                                Sit facilisis dolor arcu, fermentum vestibulum arcu elementum imperdiet.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12 px-2 mb-4">
+                        <div class="text-center">
+                            <h:graphicImage name="images/team.gif" width="100" alt="Team icon" styleClass="d-block mb-4 mx-auto"/>
+                            <h4 class="mb-2 pb-1">Team of Professionals</h4>
+                            <p class="mx-auto" style="max-width: 336px;">
+                                Nam venenatis urna aenean quis feugiat et senectus turpis.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Gallery Section -->
+            <section class="container pb-5 mb-2 mb-md-4 mb-lg-5 mt-8">
+                <div class="d-flex align-items-center justify-content-between pb-4 mb-2">
+                    <h2 class="h1 mb-0">We are Powerful</h2>
+                    <a href="#" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-images fs-4 lh-1 me-2"></i>
+                        See all photos
+                    </a>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-5">
+                        <a href="https://www.youtube.com/watch?v=zPo5ZaH6sW8" class="gallery-item rounded-3">
+                            <h:graphicImage name="images/member8.jpg" alt="Gallery thumbnail"/>
+                            <div class="gallery-item-caption p-4">
+                                <h4 class="text-light mb-1">Fresh Cart Inc.</h4>
+                                <p class="mb-0">Showreel by Marvin McKinney</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-3 col-sm-5">
+                        <a href="images/02.jpg" class="gallery-item rounded-3 mb-4">
+                            <h:graphicImage name="images/02.jpg" alt="Gallery thumbnail" style="height: 310px;"/>
+                            <div class="gallery-item-caption fs-sm fw-medium">
+                                Program for apprentices
+                            </div>
+                        </a>
+                        <a href="images/member5.jpg" class="gallery-item rounded-3">
+                            <h:graphicImage name="images/member5.jpg" alt="Gallery thumbnail"/>
+                            <div class="gallery-item-caption fs-sm fw-medium">
+                                Modern bright offices
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-sm-7">
+                        <a href="images/member6.jpg" class="gallery-item rounded-3 mb-4">
+                            <h:graphicImage name="images/member6.jpg" alt="Gallery thumbnail" style="height: 360px;"/>
+                            <div class="gallery-item-caption fs-sm fw-medium">
+                                Friendly professional team
+                            </div>
+                        </a>
+                        <a href="images/member7.jpg" class="gallery-item rounded-3">
+                            <h:graphicImage name="images/member7.jpg" alt="Gallery thumbnail"/>
+                            <div class="gallery-item-caption fs-sm fw-medium">
+                                Efficient project management
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Partners Section -->
+            <section class="container mt-8 mb-5 pb-3 pb-md-4 pb-lg-5">
+                <div class="row gy-4 py-xl-2">
+                    <div class="col-md-4">
+                        <div class="info-whydiff">
+                            <div class="section-title-left pt-80">
+                                <h3 class="party" style="font-size: 38px;">
+                                    Our Partners
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 offset-lg-1 col-md-8">
+                        <div class="row row-cols-sm-4 row-cols-2 gy-4">
+                            <div class="col">
+                                <div class="position-relative text-center">
+                                    <h:graphicImage name="images/flipkartlogo.png" width="100" alt="Webby" styleClass="d-block mx-auto mb-3"/>
+                                    <a href="#" class="text-body justify-content-center fs-sm stretched-link text-decoration-none">
+                                        4x mobile of the day
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="position-relative text-center">
+                                    <h:graphicImage name="images/amazonlogo.png" width="100" alt="CSSDA" styleClass="d-block mx-auto mb-3"/>
+                                    <a href="#" class="text-body justify-content-center fs-sm stretched-link text-decoration-none">
+                                        1x Kudos
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="position-relative text-center">
+                                    <h:graphicImage name="images/blinkit.png" width="100" alt="Awwwards" styleClass="d-block mx-auto mb-3"/>
+                                    <a href="#" class="text-body justify-content-center fs-sm stretched-link text-decoration-none">
+                                        3x website of the day
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="position-relative text-center">
+                                    <h:graphicImage name="images/smartshop.png" width="100" alt="FWA" styleClass="d-block mx-auto mb-3"/>
+                                    <a href="#" class="text-body justify-content-center fs-sm stretched-link text-decoration-none">
+                                        2x best website
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Form Section -->
+            <section class="container pb-5 mb-2 mt-8 mb-md-4 mb-lg-5">
+                <div class="position-relative bg-secondaryy rounded-3 py-5 mb-2">
+                    <div class="row pb-2 py-md-3 py-lg-5 px-4 px-lg-0 position-relative zindex-3">
+                        <div class="col-xl-3 col-lg-4 col-md-5 offset-lg-1">
+                            <p class="lead mb-2 mb-md-3">Ready to get started?</p>
+                            <h2 class="h1 pb-3">Don’t Hesitate to Contact Us</h2>
+                        </div>
+                        <div class="col-lg-6 col-md-7 offset-xl-1 zindex-3">
+                            <h:form>
+                                <div class="row">
+                                    <div class="col-sm-6 mb-4">
+                                        <label for="name" class="form-label fs-base">Full name</label>
+                                        <h:inputText id="name" styleClass="form-control form-control-lg" required="true"/>
+                                        <div class="invalid-feedback">Please enter your name!</div>
+                                    </div>
+                                    <div class="col-sm-6 mb-4 zindex-3">
+                                        <label for="email" class="form-label fs-base">Email</label>
+                                        <h:inputText id="email" styleClass="form-control form-control-lg" required="true"/>
+                                        <div class="invalid-feedback">Please provide a valid email address!</div>
+                                    </div>
+                                    <div class="col-12 pb-2 mb-4">
+                                        <label for="message" class="form-label fs-base">Message</label>
+                                        <h:inputTextarea id="message" styleClass="form-control form-control-lg" rows="4" required="true"/>
+                                        <div class="invalid-feedback">Please enter your message!</div>
+                                    </div>
+                                </div>
+                                <h:commandButton value="Send request" styleClass="btn btn-primary shadow-primary btn-lg btn-login" action="#{contactController.submit}"/>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer Include -->
+        <footer class="footer mt-8">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row footer-row">
+                    <!-- Logo and Description -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget">
+                            <div class="footer-logo">
+                                <a href="home.jsf">
+                                    <h:graphicImage name="images/Grocerylogo.png" alt="logo" style="width: 300px; padding: 20px; margin-left: -30px;"/>
+                                </a>
+                            </div>
+                            <p class="mb-30">
+                                We deliver more than your expectations and help you to grow
+                                your business exponentially by providing customized
+                                applications. So, don’t just think, get ready to convert
+                                your ideas into reality.
+                            </p>
+                        </div>
+                        <div class="dimc-protect">
+                            <div class="col-lg-5 text-lg-start text-center mb-2 mb-lg-0">
+                                <h3>Payment Methods</h3>
+                                <ul class="list-inline d-flex mb-0">
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/amazonpay.svg" alt="amazon pay"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/american-express.svg" alt="american express"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/mastercard.svg" alt="mastercard"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/paypal.svg" alt="paypal"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/visa.svg" alt="visa"/></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- All Category -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget mb-0">
+                            <h3>All Categories</h3>
+                            <div class="line-footer"></div>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="footer-link mb-0">
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Dairy, Bread &amp; Eggs</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Snacks &amp; Munchies</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Fruits &amp; Vegetables</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Cold Drinks &amp; Juices</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Breakfast &amp; Instant Food</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Bakery &amp; Biscuits</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Chicken, Meat &amp; Fish</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- For Consumers -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget mb-0">
+                            <h3>For Consumers</h3>
+                            <div class="line-footer"></div>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="footer-link mb-0">
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Careers</a></li>
+                                        <li><a href="shopcart.jsf"><i class="fa fa-angle-right"></i> Promos &amp; coupons</a></li>
+                                        <li><a href="orders.jsf"><i class="fa fa-angle-right"></i> Shipping</a></li>
+                                        <li><a href="orders.jsf"><i class="fa fa-angle-right"></i> Product Returns</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Payments</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> FAQ</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Get to Know Us -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget mb-0">
+                            <h3>Get to know us</h3>
+                            <div class="line-footer"></div>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="footer-link mb-0">
+                                        <li><a href="aboutus.jsf"><i class="fa fa-angle-right"></i> Company</a></li>
+                                        <li><a href="aboutus.jsf"><i class="fa fa-angle-right"></i> About</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Blog</a></li>
+                                        <li><a href="contact.jsf"><i class="fa fa-angle-right"></i> Help Center</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Our Value</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-widget mt-8">
+                            <div class="newsletter-item">
+                                <h:inputText id="email" styleClass="form-control form-control-lg" f:placeholder="Your Email" required="true"/>
+                                <button type="submit"><i class="fa fa-paper-plane"></i></button>
+                            </div>
+                            <ul class="social-media" style="display: flex; gap: 10px;">
+                                <li><a href="https://www.facebook.com/" class="facebook"><i class="bx bxl-facebook"></i></a></li>
+                                <li><a href="https://x.com/" class="twitter"><i class="bx bxl-twitter"></i></a></li>
+                                <li><a href="https://www.instagram.com/ujjvalpatel._/" class="instagram"><i class="bx bxl-instagram"></i></a></li>
+                                <li><a href="https://www.linkedin.com/in/ujjval-patel-959b6922a/" class="linkedin"><i class="bx bxl-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bar">
+                <div class="container text-center">
+                    <div class="footer-copy">
+                        <div class="copyright">
+                            © <span id="year"></span> All Rights Reserved By
+                            <a href="http://github.com/ujjval1003/" target="_blank">@ujjvalpatel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <h:outputScript name="js/app.js"/>
+    </h:body>
+</html>

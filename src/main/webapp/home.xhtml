@@ -1,0 +1,545 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Home - FreshCart</title>
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet"/>
+        <h:outputStylesheet name="css/app.css"/>
+        <style>
+            .btn-login {
+                background-color: #0aad0a !important;
+                border-color: #0aad0a !important;
+                color: #fff !important;
+            }
+            .btn-login:hover {
+                background-color: #198754 !important;
+                border-color: #198754 !important;
+            }
+            .carousel-item > div {
+                height: 500px;
+            }
+            .banner-text {
+                position: absolute;
+                top: 50%;
+                left: 10%;
+                transform: translateY(-50%);
+                color: white;
+                text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            }
+            .swiper-container {
+                padding: 20px 0;
+            }
+            .partner-list img {
+                width: 100%;
+                height: auto;
+                max-height: 150px;
+                object-fit: cover;
+            }
+            .partner-list h6 {
+                text-align: center;
+                margin-top: 10px;
+                font-size: 1rem;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <header>
+            <div>
+                <!-- Top Bar -->
+                <div class="border-bottom pb-5">
+                    <div class="bg-light py-1">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-10 col-12 d-flex" style="align-items: center;">
+                                    <span>Super Value Deals - Save more with coupons</span>
+                                </div>
+                                <div class="col-md-2 col-xxl-1 text-end d-none d-lg-block" style="margin-left: 20px;">
+                                    <div class="list-inline">
+                                        <div class="list-inline-item">
+                                            <a href="shopcart.jsf" class="text-muted position-relative">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
+                                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <div class="list-inline-item">
+                                            <a href="login.jsf" class="text-muted">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="12" cy="7" r="4"></circle>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navbar -->
+                <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+                    <div class="container">
+                        <a class="navbar-brand" href="home.jsf">
+                            <h:graphicImage name="images/Grocerylogo.png" style="width: 200px; margin-bottom: 10px; margin-left: -15px;" alt="eCommerce HTML Template"/>
+                        </a>
+                        <input type="text" class="form-control responsivesearch" style="width: 35%;" id="exampleDataList" list="datalistOptions"/>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobile_nav" aria-controls="mobile_nav" aria-expanded="false" aria-label="Toggle navigation">
+                            <div class="containerr" id="hamburger">
+                                <div class="bar1"></div>
+                                <div class="bar2"></div>
+                                <div class="bar3"></div>
+                            </div>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mobile_nav">
+                            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 float-md-right"></ul>
+                            <ul class="navbar-nav navbar-light">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="home.jsf">Home</a>
+                                </li>
+                                <li class="nav-item dmenu dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAbout" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        About
+                                    </a>
+                                    <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdownAbout">
+                                        <a class="dropdown-item" href="aboutus.jsf">About us</a>
+                                        <a class="dropdown-item" href="contact.jsf">Contact</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dmenu dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownShop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Shop
+                                    </a>
+                                    <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdownShop">
+                                        <a class="dropdown-item" href="shop.jsf">Shop</a>
+                                        <a class="dropdown-item" href="shopcart.jsf">Shop Cart</a>
+                                        <a class="dropdown-item" href="shopcheckout.jsf">Shop Checkout</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dmenu dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Account
+                                    </a>
+                                    <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdownAccount">
+                                        <a class="dropdown-item" href="login.jsf">Login</a>
+                                        <a class="dropdown-item" href="register.jsf">Register</a>
+                                        <a class="dropdown-item" href="orders.jsf">Orders</a>
+                                        <a class="dropdown-item" href="accountsetting.jsf">Settings</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <div id="main-content">
+            <!-- Scroll to Top Button -->
+            <div class="scroll-to-top">
+                <button id="scrollToTopButton" class="scroll-to-top-button">↑</button>
+            </div>
+
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="container mt-8">
+                    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div style="background: url(#{resource['images/slide-1.jpg']}) no-repeat; background-size: cover; border-radius: .5rem; background-position: center;">
+                                    <div class="ps-lg-12 py-lg-16 col-xxl-5 col-md-7 py-14 px-8 text-xs-center">
+                                        <span class="badge text-bg-warning">Opening Sale Discount 50%</span>
+                                        <h2 class="text-dark display-5 fw-bold mt-4">SuperMarket Daily <br/> Fresh Grocery</h2>
+                                        <p class="lead">Introduced a new model for online grocery shopping and convenient home delivery.</p>
+                                        <a action="shop.jsf" class="btn btn-dark mt-2">Shop Now
+                                            <i class="feather-icon icon-arrow-right ms-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="background: url(#{resource['images/slider-2.jpg']}) no-repeat; background-size: cover; border-radius: .5rem; background-position: center;">
+                                    <div class="ps-lg-12 py-lg-16 col-xxl-5 col-md-7 py-14 px-8 text-xs-center">
+                                        <span class="badge text-bg-warning">Free Shipping - orders over $100</span>
+                                        <h2 class="text-dark display-5 fw-bold mt-4">Free Shipping on <br/> orders over <span class="text-primary">$100</span></h2>
+                                        <p class="lead">Free Shipping to First-Time Customers Only, After promotions and discounts are applied.</p>
+                                        <a action="shop.jsf" class="btn btn-dark mt-2">Shop Now
+                                            <i class="feather-icon icon-arrow-right ms-1"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Welcome Section -->
+            <section class="mt-8" data-aos="fade-down">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="bg-light d-lg-flex justify-content-between align-items-center py-6 py-lg-3 px-8 rounded-3 text-center text-lg-start">
+                                <div class="d-lg-flex align-items-center">
+                                    <h:graphicImage name="images/about-icons-1.svg" alt="about-icon" styleClass="img-fluid"/>
+                                    <div class="ms-lg-4">
+                                        <h1 class="fs-2 mb-1">Welcome to FreshCart</h1>
+                                        <span>Download the app get free food &amp; <span class="text-primary">$30</span> off on your first order.</span>
+                                    </div>
+                                </div>
+                                <div class="mt-3 mt-lg-0">
+                                    <h:commandButton value="Download FreshCart App" action="#" styleClass="btn btn-dark"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Banner Section -->
+            <section class="mt-8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 col-12" data-aos="fade-left">
+                            <div class="banner mb-3">
+                                <div class="position-relative">
+                                    <h:graphicImage name="images/ad-banner-1.jpg" alt="ad-banner" styleClass="img-fluid rounded-3 w-100"/>
+                                    <div class="banner-text">
+                                        <h3 class="mb-0 fw-bold">10% cashback on <br/> personal care</h3>
+                                        <div class="mt-4 mb-5 fs-5">
+                                            <p class="mb-0">Max cashback: $12</p>
+                                            <span>Code: <span class="fw-bold text-dark">CARE12</span></span>
+                                        </div>
+                                        <a action="shop.jsf" class="btn btn-dark mt-2">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 col-12" data-aos="zoom-in">
+                            <div class="banner mb-3">
+                                <div class="position-relative">
+                                    <h:graphicImage name="images/ad-banner-2.jpg" alt="ad-banner-2" styleClass="img-fluid rounded-3 w-100"/>
+                                    <div class="banner-text">
+                                        <h3 class="fw-bold mb-2">Say yes to <br/> season’s fresh</h3>
+                                        <p class="fs-5">Refresh your day <br/> the fruity way</p>
+                                        <a action="shop.jsf" class="btn btn-dark mt-2">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-12" data-aos="fade-right">
+                            <div class="banner mb-3">
+                                <div class="position-relative">
+                                    <h:graphicImage name="images/ad-banner-3.jpg" alt="ad-banner-3" styleClass="img-fluid rounded-3 w-100"/>
+                                    <div class="banner-text">
+                                        <h3 class="fs-2 fw-bold lh-1 mb-2">When in doubt, <br/> eat ice cream</h3>
+                                        <p class="fs-5">Enjoy a scoop of <br/> summer today</p>
+                                        <a action="shop.jsf" class="btn btn-dark mt-2">Shop Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Grocery Banner Section -->
+            <section>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-lg-6 mb-3 mb-lg-0" data-aos="fade-left">
+                            <div class="py-10 px-8 rounded-3" style="background: url(#{resource['images:grocery-banner.png']}) no-repeat; background-size: cover; background-position: center;">
+                                <div>
+                                    <h3 class="fw-bold mb-1">Fruits &amp; Vegetables</h3>
+                                    <p class="mb-4">Get Upto <span class="fw-bold">30%</span> Off</p>
+                                    <h:commandLink value="Shop Now" action="shop.xhtml" styleClass="btn btn-dark"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6" data-aos="fade-right">
+                            <div class="py-10 px-8 rounded-3" style="background: url(#{resource['images/grocery-banner-2.jpg']}) no-repeat; background-size: cover; background-position: center;">
+                                <div>
+                                    <h3 class="fw-bold mb-1">Freshly Baked Buns</h3>
+                                    <p class="mb-4">Get Upto <span class="fw-bold">25%</span> Off</p>
+                                    <h:commandLink value="Shop Now" action="shop.jsf" styleClass="btn btn-dark"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Popular Products Section -->
+            <section class="my-lg-14 my-8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 mb-6">
+                            <div class="section-head text-center mt-8">
+                                <h3 class="h3style" data-title="Popular Products">Popular Products</h3>
+                                <div class="wt-separator bg-primarys"></div>
+                                <div class="wt-separator2 bg-primarys"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row g-4 row-cols-lg-5 row-cols-2 row-cols-md-3">
+                        <ui:repeat value="#{productController.products}" var="product">
+                            <div class="col fade-zoom">
+                                <div class="card card-product">
+                                    <div class="card-body">
+                                        <div class="text-center position-relative">
+                                            <h:graphicImage name="#{product.productImagesCollection[0].imagePath}" alt="#{product.name}" styleClass="mb-3 img-fluid"/>
+                                        </div>
+                                        <div class="text-small mb-1">
+                                            <small>#{product.categoryId.name}</small>
+                                        </div>
+                                        <h2 class="fs-6">
+                                            <h:commandLink value="#{product.name}" action="shop.jsf" styleClass="text-inherit text-decoration-none"/>
+                                        </h2>
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <div>
+                                                <span class="text-dark">$#{product.price}</span>
+                                                <h:panelGroup rendered="#{productController.selectedProduct.price}">
+                                                    <span class="text-decoration-line-through text-muted">$#{productController.selectedProduct.price}</span>
+                                                </h:panelGroup>
+                                            </div>
+                                            <div>
+                                                <h:form>
+                                                    <h:commandLink styleClass="btn btn-primary btn-sm add-to-cart btn-login" action="#{productController.addToCart(product.productId)}"
+                                                                   onclick="if (#{userController.userId == null}) {
+                                                                                   alert('You must log in first to add a product to the cart.');
+                                                                                   return false;
+                                                                               } else {
+                                                                                   alert('Product is added to cart');
+                                                                                   return true;
+                                                                               }">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus">
+                                                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                                                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                                                        </svg>
+                                                        Add
+                                                    </h:commandLink>
+                                                </h:form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </div>
+                </div>
+            </section>
+
+            <!-- App CTA Section -->
+            <section>
+                <div class="container" style="background: url(images/map-bg.png) no-repeat; background-size: cover;">
+                    <div class="row align-items-center text-center justify-content-center">
+                        <div class="col-lg-6 col-md-6" data-aos="fade-left">
+                            <div class="mb-6">
+                                <div class="mb-7">
+                                    <h1>Get the FreshCart app</h1>
+                                    <h5 class="mb-0">We will send you a link, open it on your phone to download the app.</h5>
+                                </div>
+                                <div class="mb-5">
+                                    <h:panelGroup>
+                                        <h:outputLabel value="Email" class="form-label"/>
+                                        <h:inputText value="#{appController.email}" styleClass="form-control" f:placeholder="Email"/>
+                                    </h:panelGroup>
+                                </div>
+                                <div>
+                                    <ul class="list-inline mb-0 mt-2">
+                                        <li class="list-inline-item">
+                                            <a href="#!"><h:graphicImage name="images/appstore-btn.svg" alt="appstore" style="width: 140px;"/></a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#!"><h:graphicImage name="images/googleplay-btn.svg" alt="googleplay" style="width: 140px;"/></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="offset-lg-2 col-lg-4 col-md-6" data-aos="zoom-in">
+                            <div class="text-lg-start">
+                                <h:graphicImage name="images/iphone-2.png" alt="iphone" styleClass="img-fluid"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer Include -->
+        <footer class="footer mt-8">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row footer-row">
+                    <!-- Logo and Description -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget">
+                            <div class="footer-logo">
+                                <a href="home.jsf">
+                                    <h:graphicImage name="images/Grocerylogo.png" alt="logo" style="width: 300px; padding: 20px; margin-left: -30px;"/>
+                                </a>
+                            </div>
+                            <p class="mb-30">
+                                We deliver more than your expectations and help you to grow
+                                your business exponentially by providing customized
+                                applications. So, don’t just think, get ready to convert
+                                your ideas into reality.
+                            </p>
+                        </div>
+                        <div class="dimc-protect">
+                            <div class="col-lg-5 text-lg-start text-center mb-2 mb-lg-0">
+                                <h3>Payment Methods</h3>
+                                <ul class="list-inline d-flex mb-0">
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/amazonpay.svg" alt="amazon pay"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/american-express.svg" alt="american express"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/mastercard.svg" alt="mastercard"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/paypal.svg" alt="paypal"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/visa.svg" alt="visa"/></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- All Category -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget mb-0">
+                            <h3>All Categories</h3>
+                            <div class="line-footer"></div>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="footer-link mb-0">
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Dairy, Bread &amp; Eggs</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Snacks &amp; Munchies</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Fruits &amp; Vegetables</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Cold Drinks &amp; Juices</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Breakfast &amp; Instant Food</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Bakery &amp; Biscuits</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Chicken, Meat &amp; Fish</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- For Consumers -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget mb-0">
+                            <h3>For Consumers</h3>
+                            <div class="line-footer"></div>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="footer-link mb-0">
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Careers</a></li>
+                                        <li><a href="shopcart.jsf"><i class="fa fa-angle-right"></i> Promos &amp; coupons</a></li>
+                                        <li><a href="orders.jsf"><i class="fa fa-angle-right"></i> Shipping</a></li>
+                                        <li><a href="orders.jsf"><i class="fa fa-angle-right"></i> Product Returns</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Payments</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> FAQ</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Get to Know Us -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget mb-0">
+                            <h3>Get to know us</h3>
+                            <div class="line-footer"></div>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="footer-link mb-0">
+                                        <li><a href="aboutus.jsf"><i class="fa fa-angle-right"></i> Company</a></li>
+                                        <li><a href="aboutus.jsf"><i class="fa fa-angle-right"></i> About</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Blog</a></li>
+                                        <li><a href="contact.jsf"><i class="fa fa-angle-right"></i> Help Center</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Our Value</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-widget mt-8">
+                            <div class="newsletter-item">
+                                <h:inputText id="email" styleClass="form-control form-control-lg" f:placeholder="Your Email" required="true"/>
+                                <button type="submit"><i class="fa fa-paper-plane"></i></button>
+                            </div>
+                            <ul class="social-media" style="display: flex; gap: 10px;">
+                                <li><a href="https://www.facebook.com/" class="facebook"><i class="bx bxl-facebook"></i></a></li>
+                                <li><a href="https://x.com/" class="twitter"><i class="bx bxl-twitter"></i></a></li>
+                                <li><a href="https://www.instagram.com/ujjvalpatel._/" class="instagram"><i class="bx bxl-instagram"></i></a></li>
+                                <li><a href="https://www.linkedin.com/in/ujjval-patel-959b6922a/" class="linkedin"><i class="bx bxl-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bar">
+                <div class="container text-center">
+                    <div class="footer-copy">
+                        <div class="copyright">
+                            © <span id="year"></span> All Rights Reserved By
+                            <a href="http://github.com/ujjval1003/" target="_blank">@ujjvalpatel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+        <h:outputScript name="js/app.js"/>
+        <script>
+            // Initialize AOS
+            AOS.init({duration: 800, once: true});
+
+            // Initialize Swiper for Best Sells Slider
+            const bestSellsSlider = new Swiper('.best-sells-slider', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                breakpoints: {
+                    576: {slidesPerView: 2},
+                    768: {slidesPerView: 3},
+                    992: {slidesPerView: 4},
+                },
+                autoplay: {delay: 5000},
+            });
+            // Initialize Bootstrap tooltips
+            const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+            const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl));
+        </script>
+    </h:body>
+</html>

@@ -9,6 +9,7 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.servlet.http.HttpSession;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -31,9 +32,6 @@ public class UserController implements Serializable {
     private String phone;
     private String address;
     private String role = "USER";
-    private String profilePicture;
-    private String oldPassword;
-    private String newPassword;
 
     // Getters and Setters
     public String getToken() { return token; }
@@ -52,17 +50,11 @@ public class UserController implements Serializable {
     public void setAddress(String address) { this.address = address; }
     public String getRole() { return role; }
     public void setRole(String role) { this.role = role; }
-    public String getProfilePicture() { return profilePicture; }
-    public void setProfilePicture(String profilePicture) { this.profilePicture = profilePicture; }
-    public String getOldPassword() { return oldPassword; }
-    public void setOldPassword(String oldPassword) { this.oldPassword = oldPassword; }
-    public String getNewPassword() { return newPassword; }
-    public void setNewPassword(String newPassword) { this.newPassword = newPassword; }
-
+    
     private Client getClient() {
         return ClientBuilder.newClient();
     }
-
+    
     public String register() {
         Client client = getClient();
         try {
@@ -72,7 +64,7 @@ public class UserController implements Serializable {
             if (response.getStatus() == Response.Status.CREATED.getStatusCode()) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Registration successful! Please login."));
                 clearFields();
-                return "login?faces-redirect=true";
+                return "login.jsf?faces-redirect=true";
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Registration failed", null));
                 return null;
@@ -94,9 +86,24 @@ public class UserController implements Serializable {
                 String[] tokenParts = token.split("\\.");
                 String payload = new String(java.util.Base64.getDecoder().decode(tokenParts[1]));
                 userId = Long.parseLong(payload.split("\"sub\":\"")[1].split("\"")[0]);
+                role = payload.split("\"role\":\"")[1].split("\"")[0];
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(true);
+                session.setAttribute("userId", userId);
+                session.setAttribute("role", role);
                 loadUserProfile();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Login successful!"));
-                return "profile?faces-redirect=true";
+                if (role.equals("SELLER")) {
+                    SellerController sellerController = FacesContext.getCurrentInstance().getApplication()
+                            .evaluateExpressionGet(FacesContext.getCurrentInstance(), "#{sellerController}", SellerController.class);
+                    sellerController.initSellerId(userId, token, role);
+                    return "sellerproducts.jsf?faces-redirect=true";
+                } else if (role.equals("USER")){
+                    return "shop.jsf?faces-redirect=true";
+                } else {
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid credentials", null));
+                    return null;
+                }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid credentials", null));
                 return null;
@@ -108,15 +115,16 @@ public class UserController implements Serializable {
 
     public String updateProfile() {
         Client client = getClient();
+        loadUserProfile();
         try {
             Response response = client.target(API_BASE_URL + "/profile")
                     .request(MediaType.APPLICATION_JSON)
                     .header("Authorization", "Bearer " + token)
-                    .put(Entity.json(new UpdateProfileRequest(userId, name, phone, address, profilePicture)));
+                    .put(Entity.json(new UpdateProfileRequest(userId, name, phone, address, password)));
             if (response.getStatus() == Response.Status.OK.getStatusCode()) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Profile updated successfully!"));
                 loadUserProfile();
-                return "profile?faces-redirect=true";
+                return "accountsetting.jsf?faces-redirect=true";
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Update failed", null));
                 return null;
@@ -126,29 +134,10 @@ public class UserController implements Serializable {
         }
     }
 
-    public String changePassword() {
-        Client client = getClient();
-        try {
-            Response response = client.target(API_BASE_URL + "/profile/changePassword")
-                    .request(MediaType.APPLICATION_JSON)
-                    .header("Authorization", "Bearer " + token)
-                    .put(Entity.json(new ChangePasswordRequest(userId, oldPassword, newPassword)));
-            if (response.getStatus() == Response.Status.OK.getStatusCode()) {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Password changed successfully!"));
-                oldPassword = null;
-                newPassword = null;
-                return "profile?faces-redirect=true";
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Password change failed", null));
-                return null;
-            }
-        } finally {
-            client.close();
-        }
-    }
-
     public String deleteProfile() {
         Client client = getClient();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         try {
             Response response = client.target(API_BASE_URL + "/profile/" + userId)
                     .request(MediaType.APPLICATION_JSON)
@@ -156,8 +145,15 @@ public class UserController implements Serializable {
                     .delete();
             if (response.getStatus() == Response.Status.OK.getStatusCode()) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Profile deleted successfully!"));
-                logout();
-                return "login?faces-redirect=true";
+                if (session != null) {
+                    session.removeAttribute("userId");
+                    session.removeAttribute("role");
+                    session.invalidate();
+                }
+                token = null;
+                userId = null;
+                clearFields();
+                return "login.jsf?faces-redirect=true";
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Deletion failed", null));
                 return null;
@@ -169,20 +165,30 @@ public class UserController implements Serializable {
 
     public String logout() {
         Client client = getClient();
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         try {
-            client.target(API_BASE_URL + "/logout")
+            Response response = client.target(API_BASE_URL + "/logout")
                     .request(MediaType.APPLICATION_JSON)
                     .header("Authorization", "Bearer " + token)
                     .post(Entity.json(null));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Logged out successfully!"));
+        } catch (Exception e) {
+            System.out.println("Logout error: " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Logout error: " + e.getMessage(), null));
+        } finally {
+            if (session != null) {
+                session.removeAttribute("userId");
+                session.removeAttribute("role");
+                session.invalidate();
+            }
             token = null;
             userId = null;
             clearFields();
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Logged out successfully!"));
-            return "login?faces-redirect=true";
-        } finally {
             client.close();
         }
+        return "login.jsf?faces-redirect=true";
     }
 
     private void loadUserProfile() {
@@ -198,8 +204,8 @@ public class UserController implements Serializable {
                 email = user.email;
                 phone = user.phone;
                 address = user.address;
+                password = user.password;
                 role = user.role;
-                profilePicture = user.profilePicture;
             }
         } finally {
             client.close();
@@ -213,9 +219,6 @@ public class UserController implements Serializable {
         phone = null;
         address = null;
         role = "USER";
-        profilePicture = null;
-        oldPassword = null;
-        newPassword = null;
     }
 
     public boolean isLoggedIn() {
@@ -256,26 +259,14 @@ public class UserController implements Serializable {
         public String name;
         public String phone;
         public String address;
-        public String profilePicture;
+        public String password;
 
-        public UpdateProfileRequest(Long userId, String name, String phone, String address, String profilePicture) {
+        public UpdateProfileRequest(Long userId, String name, String phone, String address, String password) {
             this.userId = userId;
             this.name = name;
             this.phone = phone;
             this.address = address;
-            this.profilePicture = profilePicture;
-        }
-    }
-
-    public static class ChangePasswordRequest {
-        public Long userId;
-        public String oldpassword;
-        public String newpassword;
-
-        public ChangePasswordRequest(Long userId, String oldpassword, String newpassword) {
-            this.userId = userId;
-            this.oldpassword = oldpassword;
-            this.newpassword = newpassword;
+            this.password = password;
         }
     }
 
@@ -286,6 +277,6 @@ public class UserController implements Serializable {
         public String phone;
         public String address;
         public String role;
-        public String profilePicture;
+        private String password;
     }
 }

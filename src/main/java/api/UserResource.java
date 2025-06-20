@@ -7,6 +7,7 @@ package api;
 import util.Secured;
 import EJB.UserBean;
 import Entity.Users;
+import dto.UserDTO;
 import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
@@ -31,7 +32,7 @@ public class UserResource {
         public String password;
         public String phone;
         public String address;
-        public String role; // USER or SELLER
+        public String role="USER"; // USER or SELLER
     }
 
     public static class LoginRequest {
@@ -44,13 +45,7 @@ public class UserResource {
         public String name;
         public String phone;
         public String address;
-        public String profilePicture;
-    }
-    
-    public static class ChangePassword {
-        public Long userId;
-        public String newpassword;
-        public String oldpassword;
+        public String password;
     }
     
     @POST
@@ -99,31 +94,18 @@ public class UserResource {
     @Path("/profile")
     public Response updateProfile(UpdateProfileRequest request) {
         Users user = userBean.updateProfile(request.userId, request.name, request.phone,
-                                           request.address, request.profilePicture);
+                                           request.address,request.password);
         if (user == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("User not found").build();
         }
-        return Response.ok(user).build();
-    }
-    
-    @PUT
-    @Secured
-    @Path("/profile/changePassword")
-    public Response changePassword(ChangePassword request, @Context ContainerRequestContext crequest) {
-        Users user = userBean.changePassword(request.userId, request.oldpassword, request.newpassword);
-        if (user == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity("User not found").build();
-        }
-        return Response.ok(user).build();
+        return Response.ok(toUserDTO(user)).build();
     }
 
     @DELETE
     @Secured
     @Path("/profile/{userId}")
     public Response deleteProfile(@PathParam("userId") Long userId) {
-//        String token = crequest.getHeaderString("Authorization").substring("Bearer ".length());
         userBean.deleteProfile(userId);
-//        userBean.blacklistToken(token);
         return Response.ok("Profile deleted and Logged out").build();
     }
     
@@ -135,6 +117,18 @@ public class UserResource {
         if (user == null) {
             return Response.status(Response.Status.NOT_FOUND).entity("User not found").build();
         }
-        return Response.ok(user).build();
+        return Response.ok(toUserDTO(user)).build();
+    }
+    
+    private UserDTO toUserDTO(Users user) {
+        UserDTO dto = new UserDTO();
+        dto.setUserId(user.getUserId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
+        dto.setAddress(user.getAddress());
+        dto.setPhone(user.getPhone());
+        dto.setPassword(user.getPassword());
+        dto.setRole(user.getRole());
+        return dto;
     }
 }

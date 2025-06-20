@@ -62,4 +62,8 @@ public class CategoryBean {
     public List<Categories> getAllCategories() {
         return em.createNamedQuery("Categories.findAll").getResultList();
     }
+
+    public Categories getCategoryById(Long categoryId) {
+        return em.find(Categories.class, categoryId);
+    }
 }

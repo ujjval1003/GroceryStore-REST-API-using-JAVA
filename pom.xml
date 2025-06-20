@@ -50,31 +50,22 @@
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
             <version>13.0.0</version>
+            <type>jar</type>
             <classifier>jakarta</classifier>
-<!--            <exclusions>
-                <exclusion>
-                    <groupId>javax.servlet</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>javax.servlet.jsp</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>-->
         </dependency>
-        <!-- JAXB API (to resolve javax.xml.bind.DatatypeConverter) -->
+         <!--JAXB API (to resolve javax.xml.bind.DatatypeConverter)--> 
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
         </dependency>
-        <!-- JAXB Implementation (required for runtime) -->
+         <!--JAXB Implementation (required for runtime)--> 
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-impl</artifactId>
             <version>2.3.1</version>
         </dependency>
-        <!-- JAX-RS Client (for REST API calls) -->
+         <!--JAX-RS Client (for REST API calls)--> 
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>

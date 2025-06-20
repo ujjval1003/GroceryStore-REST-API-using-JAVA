@@ -33,6 +33,13 @@ public class OrderBean {
         query.setParameter("userId", userId);
         return query.getResultList();
     }
+    
+    public Orders getOrderById (Long orderId) {
+        TypedQuery<Orders> query = em.createQuery(
+                "SELECT o FROM Orders o WHERE o.orderId = :orderId ORDER BY o.createdAt DESC", Orders.class);
+        query.setParameter("userId", orderId);
+        return (Orders) query;
+    }
 
     // Update order status (for sellers)
     public Orders updateOrderStatus(Long orderId, String status, Long sellerId) {
@@ -89,5 +96,11 @@ public class OrderBean {
 
         em.merge(order);
         return order;
+    }
+
+    public List<Orders> getAllOrders() {
+        TypedQuery<Orders> query = em.createQuery(
+                "SELECT o FROM Orders o ORDER BY o.createdAt DESC", Orders.class);
+        return query.getResultList();
     }
 }

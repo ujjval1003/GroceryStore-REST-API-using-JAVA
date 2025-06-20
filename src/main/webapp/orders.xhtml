@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Orders - FreshCart</title>
+        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet"/>
+        <h:outputStylesheet name="css/app.css"/>
+        <style type="text/css">
+            .btn-login {
+                background-color: #0aad0a !important;
+                border-color: #0aad0a !important;
+                color: #fff !important;
+            }
+            .btn-login:hover {
+                background-color: #198754 !important;
+                border-color: #198754 !important;
+            }
+            .txt-register {
+                color: #0aad0a !important;
+            }
+            .txt-register:hover {
+                color: #198754 !important;
+            }
+            .login-notice {
+                text-align: center;
+                margin-top: 50px;
+            }
+        </style>
+    </h:head>
+    <h:body>
+        <header>
+            <div>
+                <!-- Top Bar -->
+                <div class="border-bottom pb-5">
+                    <div class="bg-light py-1">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-10 col-12 d-flex" style="align-items: center;">
+                                    <span>Super Value Deals - Save more with coupons</span>
+                                </div>
+                                <div class="col-md-2 col-xxl-1 text-end d-none d-lg-block" style="margin-left: 20px;">
+                                    <div class="list-inline">
+                                        <div class="list-inline-item">
+                                            <a href="shopcart.jsf" class="text-muted position-relative">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag">
+                                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <div class="list-inline-item">
+                                            <a href="login.jsf" class="text-muted">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user">
+                                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                    <circle cx="12" cy="7" r="4"></circle>
+                                                </svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navbar -->
+                <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+                    <div class="container">
+                        <a class="navbar-brand" href="home.jsf">
+                            <h:graphicImage name="images/Grocerylogo.png" style="width: 200px; margin-bottom: 10px; margin-left: -15px;" alt="eCommerce HTML Template"/>
+                        </a>
+                        <input type="text" class="form-control responsivesearch" style="width: 35%;" id="exampleDataList" list="datalistOptions"/>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mobile_nav" aria-controls="mobile_nav" aria-expanded="false" aria-label="Toggle navigation">
+                            <div class="containerr" id="hamburger">
+                                <div class="bar1"></div>
+                                <div class="bar2"></div>
+                                <div class="bar3"></div>
+                            </div>
+                        </button>
+                        <div class="collapse navbar-collapse" id="mobile_nav">
+                            <ul class="navbar-nav mr-auto mt-2 mt-lg-0 float-md-right"></ul>
+                            <ul class="navbar-nav navbar-light">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="home.jsf">Home</a>
+                                </li>
+                                <li class="nav-item dmenu dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAbout" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        About
+                                    </a>
+                                    <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdownAbout">
+                                        <a class="dropdown-item" href="aboutus.jsf">About us</a>
+                                        <a class="dropdown-item" href="contact.jsf">Contact</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dmenu dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownShop" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Shop
+                                    </a>
+                                    <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdownShop">
+                                        <a class="dropdown-item" href="shop.jsf">Shop</a>
+                                        <a class="dropdown-item" href="shopcart.jsf">Shop Cart</a>
+                                        <a class="dropdown-item" href="shopcheckout.jsf">Shop Checkout</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item dmenu dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAccount" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Account
+                                    </a>
+                                    <div class="dropdown-menu sm-menu" aria-labelledby="navbarDropdownAccount">
+                                        <a class="dropdown-item" href="login.jsf">Login</a>
+                                        <a class="dropdown-item" href="register.jsf">Register</a>
+                                        <a class="dropdown-item" href="orders.jsf">Orders</a>
+                                        <a class="dropdown-item" href="accountsetting.jsf">Settings</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        
+        <!-- Login Notice for Unauthenticated Users -->
+        <h:panelGroup rendered="#{!userController.isLoggedIn()}">
+            <div class="login-notice">
+                <div class="container">
+                    <h3 class="mb-4">Please Log In</h3>
+                    <p class="mb-4">You must be logged in to update your profile.</p>
+                    <h:form>
+                        <h:commandButton value="Go to Login" action="login.jsf" class="btn btn-primary btn-login"/>
+                    </h:form>
+                </div>
+            </div>
+        </h:panelGroup>
+        
+        <h:panelGroup rendered="#{userController.isLoggedIn()}">
+            <div id="page-content">
+                <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 col-12 border-end d-none d-md-block">
+                                <div class="pt-10 pe-lg-10">
+                                    <ul class="nav flex-column nav-pills nav-pills-dark">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="orders.jsf">
+                                                <i class="fas fa-shopping-bag me-2"></i>
+                                                Your Orders
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="accountsetting.jsf">
+                                                <i class="fas fa-cog me-2"></i>
+                                                Settings
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <hr />
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="home.jsf">
+                                                <i class="fas fa-sign-out-alt me-2"></i>
+                                                Log out
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 col-md-8 col-12">
+                                <div class="p-6 p-lg-10">
+                                    <h2 class="mb-6">Your Orders</h2>
+                                    <div class="table-responsive border-0">
+                                        <h:form>
+                                            <table id="orderTable" class="table mb-0 text-nowrap">
+                                                <thead class="table-light">
+                                                    <tr>
+                                                        <th class="border-0"> </th>
+                                                        <th class="border-0">Product</th>
+                                                        <th class="border-0">Order</th>
+                                                        <th class="border-0">Date</th>
+                                                        <th class="border-0">Items</th>
+                                                        <th class="border-0">Status</th>
+                                                        <th class="border-0">Amount</th>
+                                                        <th class="border-0"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <ui:repeat value="#{cartOrderController.orders}" var="order">
+                                                        <tr>
+                                                            <td class="align-middle border-top-0 w-0">
+                                                                <h:graphicImage value="#{order.orderItemsCollection[0].productId.productImagesCollection[0].imagePath}" alt="#{order.orderItemsCollection[0].productId.name}" styleClass="icon-shape icon-xl"/>
+                                                            </td>
+                                                            <td class="align-middle border-top-0">
+                                                                <h6 class="mb-0">#{order.orderItemsCollection[0].productId.name}</h6>
+                                                                <span><small class="text-muted">#{order.orderItemsCollection[0].productId.description}</small></span>
+                                                            </td>
+                                                            <td class="align-middle border-top-0">#{order.orderId}</td>
+                                                            <td class="align-middle border-top-0">#{order.createdAt}</td>
+                                                            <td class="align-middle border-top-0">#{order.orderItemsCollection.size()}</td>
+                                                            <td class="align-middle border-top-0">
+                                                                <span class="badge bg-#{order.status == 'SHIPPED' ? 'warning' : order.status == 'DILIVERED' ? 'success' : 'danger'}">#{order.status}</span>
+                                                            </td>
+                                                            <td class="align-middle border-top-0">$#{order.totalPrice}</td>
+                                                            <td class="text-muted align-middle border-top-0">
+                                                                <h:commandLink action="#{cartOrderController.cancelOrder(order.orderId)}" 
+                                                                               styleClass="action-icon text-danger" 
+                                                                               title="Cancel Order" 
+                                                                               rendered="#{order.status == 'PENDING'}" 
+                                                                               onclick="return confirm('Are you sure you want to cancel this order?');">
+                                                                    <i class="bx bx-trash"></i>
+                                                                    <f:ajax render=":orderTable" execute="@form"/>
+                                                                </h:commandLink>
+                                                            </td>
+                                                        </tr>
+                                                    </ui:repeat>
+                                                </tbody>
+                                            </table>
+                                        </h:form>
+                                    </div>
+                                    <h:panelGroup rendered="#{empty cartOrderController.orders}">
+                                        <p class="text-muted">No Orders found.</p>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </h:panelGroup>
+        
+        <!-- Footer Include -->
+        <footer class="footer mt-8">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row footer-row">
+                    <!-- Logo and Description -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget">
+                            <div class="footer-logo">
+                                <a href="home.jsf">
+                                    <h:graphicImage name="images/Grocerylogo.png" alt="logo" style="width: 300px; padding: 20px; margin-left: -30px;"/>
+                                </a>
+                            </div>
+                            <p class="mb-30">
+                                We deliver more than your expectations and help you to grow
+                                your business exponentially by providing customized
+                                applications. So, don’t just think, get ready to convert
+                                your ideas into reality.
+                            </p>
+                        </div>
+                        <div class="dimc-protect">
+                            <div class="col-lg-5 text-lg-start text-center mb-2 mb-lg-0">
+                                <h3>Payment Methods</h3>
+                                <ul class="list-inline d-flex mb-0">
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/amazonpay.svg" alt="amazon pay"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/american-express.svg" alt="american express"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/mastercard.svg" alt="mastercard"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/paypal.svg" alt="paypal"/></a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a href="#"><h:graphicImage name="images/visa.svg" alt="visa"/></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- All Category -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget mb-0">
+                            <h3>All Categories</h3>
+                            <div class="line-footer"></div>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="footer-link mb-0">
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Dairy, Bread &amp; Eggs</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Snacks &amp; Munchies</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Fruits &amp; Vegetables</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Cold Drinks &amp; Juices</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Breakfast &amp; Instant Food</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Bakery &amp; Biscuits</a></li>
+                                        <li><a href="shop.jsf"><i class="fa fa-angle-right"></i> Chicken, Meat &amp; Fish</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- For Consumers -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget mb-0">
+                            <h3>For Consumers</h3>
+                            <div class="line-footer"></div>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="footer-link mb-0">
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Careers</a></li>
+                                        <li><a href="shopcart.jsf"><i class="fa fa-angle-right"></i> Promos &amp; coupons</a></li>
+                                        <li><a href="orders.jsf"><i class="fa fa-angle-right"></i> Shipping</a></li>
+                                        <li><a href="orders.jsf"><i class="fa fa-angle-right"></i> Product Returns</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Payments</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> FAQ</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Get to Know Us -->
+                    <div class="col-sm-6 col-lg-3 mb-30">
+                        <div class="footer-widget mb-0">
+                            <h3>Get to know us</h3>
+                            <div class="line-footer"></div>
+                            <div class="row">
+                                <div class="col">
+                                    <ul class="footer-link mb-0">
+                                        <li><a href="aboutus.jsf"><i class="fa fa-angle-right"></i> Company</a></li>
+                                        <li><a href="aboutus.jsf"><i class="fa fa-angle-right"></i> About</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Blog</a></li>
+                                        <li><a href="contact.jsf"><i class="fa fa-angle-right"></i> Help Center</a></li>
+                                        <li><a href="#"><i class="fa fa-angle-right"></i> Our Value</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="footer-widget mt-8">
+                            <div class="newsletter-item">
+                                <h:inputText id="email" styleClass="form-control form-control-lg" f:placeholder="Your Email" required="true"/>
+                                <button type="submit"><i class="fa fa-paper-plane"></i></button>
+                            </div>
+                            <ul class="social-media" style="display: flex; gap: 10px;">
+                                <li><a href="https://www.facebook.com/" class="facebook"><i class="bx bxl-facebook"></i></a></li>
+                                <li><a href="https://x.com/" class="twitter"><i class="bx bxl-twitter"></i></a></li>
+                                <li><a href="https://www.instagram.com/ujjvalpatel._/" class="instagram"><i class="bx bxl-instagram"></i></a></li>
+                                <li><a href="https://www.linkedin.com/in/ujjval-patel-959b6922a/" class="linkedin"><i class="bx bxl-linkedin"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bar">
+                <div class="container text-center">
+                    <div class="footer-copy">
+                        <div class="copyright">
+                            © <span id="year"></span> All Rights Reserved By
+                            <a href="http://github.com/ujjval1003/" target="_blank">@ujjvalpatel</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/js/bootstrap.bundle.min.js"></script>
+        <h:outputScript name="js/app.js"/>
+    </h:body>
+</html>

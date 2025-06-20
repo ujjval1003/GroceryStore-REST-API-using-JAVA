@@ -8,13 +8,14 @@ import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Set;
+import util.CorsFilter;
 import util.JwtFilter;
 
 /**
  *
  * @author ACER
  */
-@ApplicationPath("api")
+@ApplicationPath("/api")
 public class RestApplication extends Application {
     @Override
     public Set<Class<?>> getClasses() {
@@ -26,6 +27,7 @@ public class RestApplication extends Application {
         classes.add(SellerResource.class);
         classes.add(UserResource.class);
         classes.add(JwtFilter.class);
+        classes.add(CorsFilter.class);
         return classes;
     }
 }

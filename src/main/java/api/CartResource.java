@@ -5,10 +5,14 @@
 package api;
 
 import EJB.CartBean;
+import Entity.CartItems;
+import Entity.Carts;
 import Entity.OrderItems;
 import Entity.Orders;
 import Entity.ProductImages;
 import Entity.Products;
+import dto.CartDTO;
+import dto.CartItemDTO;
 import dto.OrderDTO;
 import dto.OrderItemDTO;
 import dto.ProductDTO;
@@ -35,15 +39,16 @@ public class CartResource {
 
     @EJB
     private CartBean cartBean;
-
+    
     public static class CartRequest {
         public Long userId;
         public Long productId;
         public int quantity;
     }
 
-    public static class CheckoutRequest {
+    public static class UpdateCartItemRequest {
         public Long userId;
+        public Long productId;
     }
 
     public static class DirectCheckoutRequest {
@@ -68,6 +73,62 @@ public class CartResource {
         }
     }
 
+    @GET
+    @Secured(role = "USER")
+    public Response getCartById(@Context ContainerRequestContext crequest) {
+        String authUserId = (String) crequest.getProperty("userId");
+        try {
+            Carts cart = cartBean.getUserCart(Long.valueOf(authUserId));
+            return Response.ok(toCartDTO(cart)).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
+    }
+    
+    @PUT
+    @Path("/increase")
+    @Secured(role = "USER")
+    public Response increaseCartItemQuantity(UpdateCartItemRequest request, @Context ContainerRequestContext crequest) {
+        String authUserId = (String) crequest.getProperty("userId");
+        if (!authUserId.equals(String.valueOf(request.userId))) {
+            return Response.status(Response.Status.FORBIDDEN).entity("Unauthorized user ID").build();
+        }
+        try {
+            cartBean.increaseCartItemQuantity(request.userId, request.productId);
+            return Response.ok("Cart item quantity increased").build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (jakarta.persistence.NoResultException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Cart item not found").build();
+        }
+    }
+
+    @PUT
+    @Path("/decrease")
+    @Secured(role = "USER")
+    public Response decreaseCartItemQuantity(UpdateCartItemRequest request, @Context ContainerRequestContext crequest) {
+        String authUserId = (String) crequest.getProperty("userId");
+        if (!authUserId.equals(String.valueOf(request.userId))) {
+            return Response.status(Response.Status.FORBIDDEN).entity("Unauthorized user ID").build();
+        }
+        try {
+            cartBean.decreaseCartItemQuantity(request.userId, request.productId);
+            return Response.ok("Cart item quantity decreased").build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        } catch (jakarta.persistence.NoResultException e) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Cart item not found").build();
+        }
+    }
+    
+    @DELETE
+    @Secured(role = "USER")
+    @Path("/item/{CartItemId}")
+    public Response deleteCartItem(@PathParam("CartItemId") Long CartItemId) {
+        cartBean.deleteCartItem(CartItemId);
+        return Response.ok("Cart Item deleted").build();
+    }
+    
     @POST
     @Path("/direct-checkout")
     @Secured(role = "USER")
@@ -92,13 +153,10 @@ public class CartResource {
     @POST
     @Path("/checkout")
     @Secured(role = "USER")
-    public Response checkoutCart(CheckoutRequest request, @Context ContainerRequestContext crequest) {
+    public Response checkoutCart(@Context ContainerRequestContext crequest) {
         String authUserId = (String) crequest.getProperty("userId");
-        if (!authUserId.equals(String.valueOf(request.userId))) {
-            return Response.status(Response.Status.FORBIDDEN).entity("Unauthorized user ID").build();
-        }
         try {
-            Orders order = cartBean.checkoutCart(request.userId);
+            Orders order = cartBean.checkoutCart(Long.valueOf(authUserId));
             return Response.status(Response.Status.CREATED).entity(toOrderDTO(order)).build();
         } catch (ConstraintViolationException e) {
             String violations = e.getConstraintViolations().stream()
@@ -110,6 +168,27 @@ public class CartResource {
         } catch (IllegalArgumentException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
+    }
+    
+    private CartDTO toCartDTO(Carts cart) {
+        CartDTO dto = new CartDTO();
+        dto.setCartId(cart.getCartId());
+        dto.setUserId(new UserDTO(cart.getUserId().getUserId()));
+        dto.setCreatedAt(cart.getCreatedAt());
+        dto.setCartItemsCollection(
+                cart.getCartItemsCollection().stream()
+                        .map(this::toCartItemDTO)
+                        .collect(Collectors.toList())
+        );
+        return dto;
+    }
+
+    private CartItemDTO toCartItemDTO(CartItems item) {
+        CartItemDTO dto = new CartItemDTO();
+        dto.setCartItemId(item.getCartItemId());
+        dto.setProductId(toProductDTO(item.getProductId()));
+        dto.setQuantity(item.getQuantity());
+        return dto;
     }
     
     private OrderDTO toOrderDTO(Orders order) {

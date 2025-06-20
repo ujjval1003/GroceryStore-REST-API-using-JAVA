@@ -242,12 +242,7 @@ public class SellerResource {
     
     @GET
     @Path("/discounts")
-    @Secured(role = "SELLER")
-    public Response getDiscounts(@QueryParam("sellerId") Long sellerId, @Context ContainerRequestContext crequest) {
-        String authUserId = (String) crequest.getProperty("userId");
-        if (!authUserId.equals(String.valueOf(sellerId))) {
-            return Response.status(Response.Status.FORBIDDEN).entity("Unauthorized seller ID").build();
-        }
+    public Response getDiscounts(@QueryParam("sellerId") Long sellerId) {
         try {
             List<Discounts> discounts = discountBean.getDiscountsBySeller(sellerId);
             List<DiscountDTO> discountDTOs = discounts.stream()
@@ -308,18 +303,25 @@ public class SellerResource {
     }
     
     @GET
-    @Path("/category")
+    @Path("/category/{id}")
     @Secured(role = "SELLER")
-    public Response getAllProducts(@QueryParam("sellerId") Long sellerId, @Context ContainerRequestContext crequest) {
+    public Response getCategoryById(@PathParam("id") Long categoryId, @QueryParam("sellerId") Long sellerId, @Context ContainerRequestContext crequest) {
         String authUserId = (String) crequest.getProperty("userId");
         if (!authUserId.equals(String.valueOf(sellerId))) {
             return Response.status(Response.Status.FORBIDDEN).entity("Unauthorized seller ID").build();
         }
-        List<Categories> category = categoryBean.getAllCategories();
-        List<CategoryDTO> categoryDTOs = category.stream()
-                .map(this::toCategoryDTO)
-                .collect(Collectors.toList());
-        return Response.ok(categoryDTOs).build();
+        try {
+            if (categoryId == null) {
+                return Response.status(Response.Status.BAD_REQUEST).entity("Category ID required").build();
+            }
+            Categories category = categoryBean.getCategoryById(categoryId);
+            if (category == null) {
+                return Response.status(Response.Status.NOT_FOUND).entity("Category not found").build();
+            }
+            return Response.ok(toCategoryDTO(category)).build();
+        } catch(IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+        }
     }
     
     @GET
@@ -370,6 +372,7 @@ public class SellerResource {
     
     private CategoryDTO toCategoryDTO(Categories category) {
         CategoryDTO dto = new CategoryDTO();
+        dto.setCategoryId(category.getCategoryId());
         dto.setName(category.getName());
         dto.setDescription(category.getDescription());
         return dto;
