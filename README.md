@@ -138,9 +138,6 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 For questions or support, feel free to contact the project maintainer at ujjvalpatel210@gmail.com.
-
 Connect with me on [Linkedin](https://www.linkedin.com/in/ujjval-patel-959b6922a/).
-
 If you're looking for a dataset for analysis, check out my [NSE Historical data 1990-2024](https://www.kaggle.com/datasets/ujjvalpatel1003/nse-historical-data-1990-2023) on Kaggle.
-
 You can also explore the accompanying notebook: [Technical Analysis of Financial Data](https://www.kaggle.com/code/ujjvalpatel1003/technical-analysis-of-financial-data).
