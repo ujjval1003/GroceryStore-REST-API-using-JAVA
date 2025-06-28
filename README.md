@@ -9,8 +9,8 @@ GroceryStore is a web-based application built using Java and Jakarta EE for mana
 - **Application Server**: Payara Server 6.2025.2
 - **Framework**: Jakarta EE 10
 - **Java Version**: Java 17
-- **Frontend**: JSF (JavaServer Faces) with PrimeFaces, HTML, CSS, JavaScript
-- **Backend**: Maven, REST APIs, EJBs
+- **Frontend**: JSF (JavaServer Faces), HTML, CSS, JavaScript, AJAX
+- **Backend**: Maven, REST APIs (JWT Authentication), EJBs (Stateless Session Beans)
 - **Other Tools**: phpMyAdmin (for database management)
 
 ## Prerequisites
@@ -55,11 +55,11 @@ Follow these steps to set up and run the project:
    - Create a Connection Pool:
      - In the Admin Console, go to **Resources** > **JDBC** > **JDBC Connection Pools** > **New**.
      - Enter:
-       - Pool Name: `projectPool`
+       - Pool Name: `project`
        - Resource Type: `javax.sql.DataSource`
        - Database Driver Vendor: `MySQL`
      - Click **Next**, then add properties:
-       - `URL`: `jdbc:mysql://localhost:3306/project?useSSL=false`
+       - `URL`: `jdbc:mysql://localhost:3306/project`
        - `User`: `root`
        - `Password`: (your MySQL password, if any)
      - Click **Finish**, then **Ping** to test the connection.
@@ -67,7 +67,7 @@ Follow these steps to set up and run the project:
      - Go to **Resources** > **JDBC** > **JDBC Resources** > **New**.
      - Enter:
        - JNDI Name: `jdbc/project`
-       - Pool Name: `projectPool`
+       - Pool Name: `project`
      - Click **OK**.
 
 5. **Run the Project**:
@@ -137,4 +137,7 @@ To contribute to this project:
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
-For questions or support, contact the project maintainer @ ujjvalpatel210@gmail.com.
+For questions or support, feel free to contact the project maintainer at ujjvalpatel210@gmail.com.
+Connect with me on [Linkedin](https://www.linkedin.com/in/ujjval-patel-959b6922a/).
+If you're looking for a dataset for analysis, check out my [NSE Historical data 1990-2024](https://www.kaggle.com/datasets/ujjvalpatel1003/nse-historical-data-1990-2023) on Kaggle.
+You can also explore the accompanying notebook: [Technical Analysis of Financial Data](https://www.kaggle.com/code/ujjvalpatel1003/technical-analysis-of-financial-data).
