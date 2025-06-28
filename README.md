@@ -137,4 +137,4 @@ To contribute to this project:
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
-For questions or support, contact the project maintainer @ [ujjvalpatel210@gmail.com].
+For questions or support, contact the project maintainer @ ujjvalpatel210@gmail.com.
